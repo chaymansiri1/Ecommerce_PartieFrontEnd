@@ -1,0 +1,22 @@
+.product-item {
+    display: flex;
+    flex-direction: column; /* Met les éléments verticalement l'un au-dessus de l'autre */
+}
+
+.pd-color {
+    margin-bottom: 10px; /* Ajoute un espace entre la couleur et les contrôles de quantité */
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+}
+
+.pro-qty {
+    display: flex;
+    align-items: center;
+}
+
+.primary-btn.pd-cart {
+    margin-left: 10px; /* Ajoute un espace entre le bouton "Add to Cart" et les contrôles de quantité */
+}

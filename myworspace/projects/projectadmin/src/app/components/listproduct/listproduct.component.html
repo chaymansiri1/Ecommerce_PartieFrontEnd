@@ -1,0 +1,223 @@
+
+<div class="content-body">
+    <div class="container-fluid">
+   
+        <!-- row -->
+
+        <div class="row">
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Exam Toppers</h4>
+        </div>
+        <input type="text" [(ngModel)]="searchText" placeholder="Recherche de produit..." class="form-control" />
+         <!-- Button trigger modal -->
+   <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#basicModal">Add Product
+    <i class="fas fa-plus"></i>
+   </button>
+
+            <div class="table-responsive">
+                <table class="table table-responsive-md"> 
+                 
+                  
+
+
+                    <thead>
+                        <tr>
+                            
+                            <th scope="col">#</th>
+                            <th><strong>name</strong></th>
+                            <th><strong>Ref</strong></th>
+                            <th><strong>Color</strong></th>
+                            <th><strong>qte</strong></th>
+                            <th><strong>qte_en_stock</strong></th>
+                            <th><strong>price</strong></th>
+                            <th><strong>description</strong></th>
+                            <th><strong>image</strong></th>
+                            <th><strong>Action</strong></th>
+                           
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @for (product of products | searchFilter:searchText;let i= $index; track product.id) {
+                        <tr>
+                           
+                            <th scope="row">{{ i + 1 }}</th>
+                          
+                           
+                            <td><strong>{{ product.name }}</strong></td>
+                           <td>{{ product.ref }}</td>
+                            <td>{{ product.color }}</td>
+                            <td>{{ product.qte }}</td>
+                            <td>{{ product.qte_en_stock }}</td>
+                            <td>{{ product.price}}</td>
+                            <td>{{ product.description }}</td>
+                            <td><div class="d-flex align-items-center"><img src="http://localhost:8088/products/files/{{product.image}}" class="rounded-lg me-2" width="100" height="100" alt="{{ product.name }}"> 
+                               </div></td>
+                            
+                           <td>
+                                <div class="d-flex">
+                                    <a [routerLink]="['/home/products',product.id]" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-search"></i></a>
+                                    <a  (click)="getProductDetails(product.id)" class="btn btn-warning shadow btn-xs sharp me-1"  data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg"><i class="fas fa-pencil-alt"></i></a>
+                                    <!-- <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg">Large modal</button> -->
+                                    <a (click)="deleteProduct(product.id)" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
+                                   
+                                </div>
+                            </td>
+                            
+                        </tr>
+                     
+                        
+
+                    }
+
+                    
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+  <!-- Large modal -->
+ 
+  <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal">
+          </button>
+        </div>
+        <form [formGroup]="updateForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+          <div class="modal-body">Update Product
+  
+            <div class="form-group">
+              <label for="name">Nom du produit</label>
+              <input type="text" id="name" formControlName="name" class="form-control" required />
+            </div>
+  
+            <div class="form-group">
+              <label for="ref">Référence</label>
+              <input type="text" id="ref" formControlName="ref" class="form-control" required />
+            </div>
+  
+            <div class="form-group">
+              <label for="color">Couleur</label>
+              <input type="text" id="color" formControlName="color" class="form-control" required />
+            </div>
+  
+            <div class="form-group">
+              <label for="qte">Quantité</label>
+              <input type="number" id="qte" formControlName="qte" class="form-control" required />
+            </div>
+  
+            <div class="form-group">
+              <label for="qte_en_stock">Quantité en stock</label>
+              <input type="number" id="qte_en_stock" formControlName="qte_en_stock" class="form-control" required />
+            </div>
+  
+            <div class="form-group">
+              <label for="price">Prix</label>
+              <input type="number" id="price" formControlName="price" class="form-control" required />
+            </div>
+  
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea id="description" formControlName="description" class="form-control" required></textarea>
+            </div>
+  
+            <div class="form-group">
+              <label for="image">Image du produit</label>
+              <input type="file" id="image" (change)="onFileSelected($event)" class="form-control" />
+            </div>
+  
+  
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary" (click)="onSubmit()" data-bs-dismiss="modal">Save changes</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Large modal -->
+  
+  <!-- Modal -->
+   <div class="modal fade" id="basicModal">
+       <div class="modal-dialog" role="document">
+           <div class="modal-content">
+               <div class="modal-header">
+                   <h5 class="modal-title">Modal title</h5>
+                   <button type="button" class="btn-close" data-bs-dismiss="modal">
+                   </button>
+               </div>
+               <form [formGroup]="addform" (ngSubmit)="onSubmitt()" enctype="multipart/form-data">
+               <div class="modal-body">Add Product
+
+                <div class="form-group">
+                  <label for="name">Nom du produit</label>
+                  <input type="text" id="name" formControlName="name" class="form-control" required />
+                </div>
+      
+                <div class="form-group">
+                  <label for="ref">Référence</label>
+                  <input type="text" id="ref" formControlName="ref" class="form-control" required />
+                </div>
+      
+                <div class="form-group">
+                  <label for="color">Couleur</label>
+                  <input type="text" id="color" formControlName="color" class="form-control" required />
+                </div>
+      
+                <div class="form-group">
+                  <label for="qte">Quantité</label>
+                  <input type="number" id="qte" formControlName="qte" class="form-control" required />
+                </div>
+      
+                <div class="form-group">
+                  <label for="qte_en_stock">Quantité en stock</label>
+                  <input type="number" id="qte_en_stock" formControlName="qte_en_stock" class="form-control" required />
+                </div>
+      
+                <div class="form-group">
+                  <label for="price">Prix</label>
+                  <input type="number" id="price" formControlName="price" class="form-control" required />
+                </div>
+      
+                <div class="form-group">
+                  <label for="description">Description</label>
+                  <textarea id="description" formControlName="description" class="form-control" required></textarea>
+                </div>
+      
+                <div class="form-group">
+                  <label for="image">Image du produit</label>
+                  <input type="file" id="image" (change)="onFileSelected($event)" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                  <label for="subcategory">Sous-catégorie</label>
+                  <select id="subcategory" formControlName="subcategory" class="form-control">
+                    @for (subcategory of subcategories;track subcategory.name){
+                    <option  [value]="subcategory.id">{{ subcategory.name }}</option>}
+                  </select>
+                </div>
+               
+               <div class="modal-footer">
+                   <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
+                   <button type="submit" class="btn btn-primary" (click)="onSubmitt()" data-bs-dismiss="modal">Save changes</button>
+               </div>
+               </div>
+               </form>
+           </div>
+       </div>
+   </div>
+  
+
+  
+                                    

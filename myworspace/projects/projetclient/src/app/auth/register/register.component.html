@@ -1,0 +1,64 @@
+   <!-- Register Section Begin -->
+   <div class="register-login-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="register-form">
+                    <h2>Register</h2>
+                    <form [formGroup]="signupForm" >
+                        <div class="group-input">
+                            <label for="username">Username*</label>
+                            <input type="text" id="username" class="form-control" formControlName="username"  placeholder="username">
+                             @if(signupForm.get('username')?.hasError('required') && signupForm.get('username')?.touched){
+                            <div  class="text-danger">
+                                Le champ "email" est obligatoire.
+                            </div>}
+                           
+                        </div>
+                        <div class="group-input">
+                            <label for="email">Email*</label>
+                            <input type="email" id="email" class="form-control" formControlName="email" placeholder="hello@example.com">
+                            @if(signupForm.get('email')?.hasError('required') && signupForm.get('email')?.touched){
+                                <div  class="text-danger">
+                                    Le champ "email" est obligatoire.
+                                </div>}
+                                @if(signupForm.get('email')?.hasError('pattern') && signupForm.get('email')?.touched){
+                                <div  class="text-danger">
+                                    Le format l’adresse mail   n'est pas valide.
+                                </div>}
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password*</label>
+                            <input type="password" id="password" class="form-control" formControlName="password" placeholder="password" >
+                            @if(signupForm.get('password')?.hasError('required') && signupForm.get('password')?.touched){
+                                <div  class="text-danger">
+                                    Le champ "password" est obligatoire.
+                                </div>}
+                        </div>
+                        <div class="group-input">
+                            <label for="con-pass">Localisation*</label>
+                            <input type="text" id="con-pass" class="form-control" formControlName="localisation" placeholder="localisation" >
+                            @if(signupForm.get('localisation')?.hasError('required') && signupForm.get('localisation')?.touched){
+                                <div  class="text-danger">
+                                    Le champ "Localisation" est obligatoire.
+                                </div>}
+                        </div>
+                        <div class="form-group">
+                            <label for="image">Image </label>
+                            <input type="file" id="image" (change)="onFileSelected($event)" class="form-control" />
+                            @if(signupForm.get('image')?.hasError('required') && signupForm.get('image')?.touched){
+                                <div  class="text-danger">
+                                    Le champ "image" est obligatoire.
+                                </div>}
+                          </div>
+                        <button type="submit"  class="site-btn register-btn"  (click)="onSubmit()">REGISTER</button>
+                    </form>
+                    <div class="switch-login">
+                        <a [routerLink]="['/']" class="or-login">Or Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Register Form Section End -->

@@ -1,0 +1,61 @@
+<section class="shopping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="cart-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th class="p-name">Product Name</th>
+                                <th>Price</th>
+                                <th>Qte Total</th>
+                                <th>Price Total</th>
+                                <th><i class="ti-close"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           
+                            @for (c of cart.products ; track c.id;let i= $index){
+                            <tr>
+                                <td class="cart-pic first-row"><img src="http://localhost:8088/products/files/{{c.image}}" alt=""></td>
+                                <td class="cart-title first-row">
+                                    <h5>{{c.name}}</h5>
+                                </td>
+                                <td class="p-price first-row">{{c.price}} DT</td>
+                                <td class="qua-col first-row">{{c.qte_user}}</td>
+                                <td class="total-price first-row">{{ (+c.price) * (+c.qte_user) }} DT</td>
+                                <td class="close-td first-row"><i class="ti-close"></i></td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="cart-buttons">
+                            <a href="#" class="primary-btn continue-shop">Continue shopping</a>
+                            <a href="#" class="primary-btn up-cart">Update cart</a>
+                        </div>
+                        <div class="discount-coupon">
+                            <h6>Discount Codes</h6>
+                            <form action="#" class="coupon-form">
+                                <input type="text" placeholder="Enter your codes">
+                                <button type="submit" class="site-btn coupon-btn">Apply</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 offset-lg-4">
+                        <div class="proceed-checkout">
+                            <ul>
+                                <li class="subtotal">Subtotal <span>{{cart.price_total}}</span></li>
+                                <li class="cart-total">Total <span>{{cart.price_total}}</span></li>
+                            </ul>
+                            <a href="#" class="proceed-btn">PROCEED TO CHECK OUT</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
